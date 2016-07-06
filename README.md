@@ -7,3 +7,4 @@ Features:
  - Server Interface
  - static / dynamic servers
  - Templates
+ - Additional features by community
