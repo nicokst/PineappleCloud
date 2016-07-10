@@ -3,6 +3,8 @@ package de.nicokst.bootstrap;
 import java.util.Arrays;
 import java.util.List;
 
+import de.nicokst.action.Action00Login;
+import de.nicokst.command.AuthCommand;
 import de.nicokst.command.CloudManager;
 import de.nicokst.command.HelpCommand;
 import de.nicokst.command.PingCommand;
@@ -45,10 +47,22 @@ public class Bootstrap {
 		}
 		server = new CloudServer(port);
 		manager = new CloudManager(server);
+		/*
+		 * -- COMMANDS --
+		 */
 		manager.registerCommand("ping", new PingCommand());
 		manager.registerCommand("help", new HelpCommand());
 		manager.registerCommand("stop", new StopCommand());
+		manager.registerCommand("auth", new AuthCommand());
 		System.out.println("Registered " + manager.getCommands().size() + " command(s)");
+		
+		
+		/*
+		 * -- ACTIONS --
+		 */
+		
+		manager.registerAction(00, new Action00Login());
+		
 		new Thread(() -> {
 			server.start();
 		}).start();

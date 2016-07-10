@@ -1,5 +1,7 @@
 package de.nicokst.action;
 
+import de.nicokst.entity.Client;
+
 public abstract class Action {
 	
 	private int id;
@@ -11,5 +13,7 @@ public abstract class Action {
 	public int getId() {
 		return id;
 	}
+	
+	public abstract void execute(Client client);
 	
 }
