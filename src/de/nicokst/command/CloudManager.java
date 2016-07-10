@@ -39,5 +39,7 @@ public class CloudManager {
 	public Command getCommand(String name) {
 		return commandmap.get(name.toLowerCase());
 	}
+	
+	
 
 }

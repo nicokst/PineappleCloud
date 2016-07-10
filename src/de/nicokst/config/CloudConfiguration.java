@@ -1,9 +1,13 @@
 package de.nicokst.config;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CloudConfiguration {
 
@@ -25,6 +29,56 @@ public class CloudConfiguration {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public boolean contains(String key) {	
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(f));
+			String line;
+			List<String> keys = new ArrayList<String>();
+			while((line = reader.readLine()) != null) {
+				keys.add(line.split("=")[0]);
+			}
+			reader.close();
+			return keys.contains(key);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public String getValue(String key) {
+		String out = "";
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(f));
+			String line;
+			while((line = reader.readLine()) != null) {
+				if(line.startsWith(key + "=")) {
+					return line.substring(key.length() + 1);
+				}
+			}
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return out;
+	}
+	
+	public List<String> keySet() {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(f));
+			String line;
+			List<String> keys = new ArrayList<String>();
+			while((line = reader.readLine()) != null) {
+				keys.add(line.split("=")[0]);
+			}
+			reader.close();
+			return keys;
+		} catch (Exception e) {
+		}
+		return null;
 	}
 
 }

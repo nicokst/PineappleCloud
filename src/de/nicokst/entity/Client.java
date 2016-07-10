@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.UUID;
 
+import de.nicokst.action.ActionType;
+import de.nicokst.bootstrap.Bootstrap;
 import de.nicokst.command.CommandExecutor;
 
 public class Client extends Thread implements Entity, CommandExecutor {
@@ -21,6 +23,7 @@ public class Client extends Thread implements Entity, CommandExecutor {
 	public Client(Socket socket) {
 		this.socket = socket;
 		matchUUID();
+		sendMessage(ActionType.TEXT_MESSAGE + ";" + Bootstrap.config.getValue("greet"));
 	}
 	
 	public UUID getUnique() {
@@ -57,7 +60,15 @@ public class Client extends Thread implements Entity, CommandExecutor {
 	}
 
 	public void sendMessage(String message) {
-		getWriter().println("TEXT_MESSAGE;" + message);
+		getWriter().println(ActionType.TEXT_MESSAGE + ";" + message);
+	}
+	
+	public void disconnect(String message) {
+		getWriter().println(ActionType.DISCONNECT_MESSAGE + ";" + message);
+	}
+	
+	public void disconnect() {
+		getWriter().println(ActionType.DISCONNECT);
 	}
 
 }
